@@ -9,6 +9,7 @@ Installation:
 
 Screenshot:
 
+![Image of reaginate component](https://raw.githubusercontent.com/jamhall/reaginate/master/screenshot.png)
 
 API:
 
