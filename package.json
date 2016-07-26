@@ -14,7 +14,10 @@
         "pager",
         "paginate",
         "page",
-        "react"
+        "react",
+        "react-component",
+        "paginator",
+        "pagination"
     ],
     "author": "Jamie Hall <hello@jamiehall.eu> (https://github.com/jamhall)",
     "license": "MIT",
