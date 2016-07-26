@@ -1,7 +1,7 @@
 {
     "name": "reaginate",
     "version": "0.0.0",
-    "description": "A nice pager component for React",
+    "description": "A ReactJS component to render a pagination.",
     "main": "dist/reaginate.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
