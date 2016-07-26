@@ -15,11 +15,14 @@ export default class Reaginate extends Component {
     }
 
     static defaultProps = {
-        onPageNumberEnter: () => null
+        onPageNumberEnter: (number) => null
     }
 
     constructor(props) {
         super(props);
+        this.state = {
+            currentPage: this.props.currentPage
+        }
     }
 
     isFirstPage() {
@@ -134,20 +137,34 @@ export default class Reaginate extends Component {
         );
     }
 
-    handleCurrentPageOnEnter(event) {
-        if (event.key === 'Enter') {
-            const value = event.target.value;
-            if (!/^\d+$/.test(value)) {
-                // this.refs.currentPage.value = "1999";
+    handleCurrentPageNumberChange(value) {
+        if (/^\d+$/.test(value)) {
+            const {currentPage, totalPages} = this.props;
+            if (parseInt(value) >= 1 & parseInt(value) <= totalPages) {
+                this.props.onPageNumberEnter(value);
+                return;
             }
         }
+        this.refs.currentPage.value = this.props.currentPage;
+    }
+
+    handleCurrentPageOnEnter(event) {
+        if (event.key === 'Enter') {
+            const page = event.target.value;
+            this.handleCurrentPageNumberChange(page);
+        }
+    }
+
+    handleCurrentPageOnBlur(event) {
+        const page = this.refs.currentPage.value;
+        this.handleCurrentPageNumberChange(page);
     }
 
     renderCurrentPage() {
         const {currentPage} = this.props;
         return (
             <div className="pager-item">
-                <input className="pager-text-box" ref="currentPage" type="text" onKeyPress={:: this.handleCurrentPageOnEnter} defaultValue={currentPage}/>
+                <input className="pager-text-box" ref="currentPage" type="text" onBlur={:: this.handleCurrentPageOnBlur} onKeyPress={:: this.handleCurrentPageOnEnter} defaultValue={currentPage}/>
             </div>
         );
     }

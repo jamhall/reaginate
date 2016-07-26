@@ -83,7 +83,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Reaginate(props) {
 	        _classCallCheck(this, Reaginate);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Reaginate).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Reaginate).call(this, props));
+	
+	        _this.state = {
+	            currentPage: _this.props.currentPage
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(Reaginate, [{
@@ -240,14 +245,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	            );
 	        }
 	    }, {
+	        key: "handleCurrentPageNumberChange",
+	        value: function handleCurrentPageNumberChange(value) {
+	            if (/^\d+$/.test(value)) {
+	                var _props2 = this.props;
+	                var currentPage = _props2.currentPage;
+	                var totalPages = _props2.totalPages;
+	
+	                if (parseInt(value) >= 1 & parseInt(value) <= totalPages) {
+	                    this.props.onPageNumberEnter(value);
+	                    return;
+	                }
+	            }
+	            this.refs.currentPage.value = this.props.currentPage;
+	        }
+	    }, {
 	        key: "handleCurrentPageOnEnter",
 	        value: function handleCurrentPageOnEnter(event) {
 	            if (event.key === 'Enter') {
-	                var value = event.target.value;
-	                if (!/^\d+$/.test(value)) {
-	                    // this.refs.currentPage.value = "1999";
-	                }
+	                var page = event.target.value;
+	                this.handleCurrentPageNumberChange(page);
 	            }
+	        }
+	    }, {
+	        key: "handleCurrentPageOnBlur",
+	        value: function handleCurrentPageOnBlur(event) {
+	            var page = this.refs.currentPage.value;
+	            this.handleCurrentPageNumberChange(page);
 	        }
 	    }, {
 	        key: "renderCurrentPage",
@@ -257,7 +281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "pager-item" },
-	                _react2.default.createElement("input", { className: "pager-text-box", ref: "currentPage", type: "text", onKeyPress: this.handleCurrentPageOnEnter.bind(this), defaultValue: currentPage })
+	                _react2.default.createElement("input", { className: "pager-text-box", ref: "currentPage", type: "text", onBlur: this.handleCurrentPageOnBlur.bind(this), onKeyPress: this.handleCurrentPageOnEnter.bind(this), defaultValue: currentPage })
 	            );
 	        }
 	    }, {
@@ -338,7 +362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    displayLabel: _react.PropTypes.string
 	};
 	Reaginate.defaultProps = {
-	    onPageNumberEnter: function onPageNumberEnter() {
+	    onPageNumberEnter: function onPageNumberEnter(number) {
 	        return null;
 	    }
 	};
