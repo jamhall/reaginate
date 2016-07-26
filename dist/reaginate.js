@@ -57,7 +57,7 @@ return /******/ (function(modules) { // webpackBootstrap
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -92,263 +92,304 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    _createClass(Reaginate, [{
-	        key: "isFirstPage",
+	        key: 'isFirstPage',
 	        value: function isFirstPage() {
-	            var currentPage = this.props.currentPage;
+	            var currentPage = this.state.currentPage;
 	
 	            return currentPage === 1;
 	        }
 	    }, {
-	        key: "isLastPage",
+	        key: 'isLastPage',
 	        value: function isLastPage() {
-	            var _props = this.props;
-	            var currentPage = _props.currentPage;
-	            var totalPages = _props.totalPages;
+	            var currentPage = this.state.currentPage;
+	            var totalPages = this.props.totalPages;
 	
 	            return currentPage === totalPages;
 	        }
 	    }, {
-	        key: "renderFirstPageButton",
+	        key: 'handleOnPageChange',
+	        value: function handleOnPageChange() {
+	            var page = this.state.currentPage;
+	            if (/^\d+$/.test(page)) {
+	                var _props = this.props;
+	                var currentPage = _props.currentPage;
+	                var totalPages = _props.totalPages;
+	
+	                var convertedPage = parseInt(page);
+	                if (convertedPage >= 1 & convertedPage <= totalPages) {
+	                    this.setState({
+	                        currentPage: convertedPage
+	                    });
+	                    this.props.onPageChange(convertedPage);
+	                    return;
+	                }
+	            }
+	            this.updateCurrentPage(this.props.currentPage, false);
+	        }
+	    }, {
+	        key: 'handleCurrentPageOnBlur',
+	        value: function handleCurrentPageOnBlur() {
+	            var currentPage = this.props.currentPage;
+	
+	            this.updateCurrentPage(currentPage, false);
+	        }
+	    }, {
+	        key: 'updateCurrentPage',
+	        value: function updateCurrentPage(page) {
+	            var notify = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	
+	            this.setState({
+	                currentPage: page
+	            });
+	            if (notify) {
+	                this.props.onPageChange(page);
+	            }
+	        }
+	    }, {
+	        key: 'onNextPageClick',
+	        value: function onNextPageClick() {
+	            var currentPage = this.state.currentPage;
+	
+	            var newCurrentPage = currentPage + 1;
+	            this.updateCurrentPage(newCurrentPage);
+	        }
+	    }, {
+	        key: 'onPreviousPageClick',
+	        value: function onPreviousPageClick() {
+	            var currentPage = this.state.currentPage;
+	
+	            var newCurrentPage = currentPage - 1;
+	            this.updateCurrentPage(newCurrentPage);
+	        }
+	    }, {
+	        key: 'onFirstPageClick',
+	        value: function onFirstPageClick() {
+	            this.updateCurrentPage(1);
+	        }
+	    }, {
+	        key: 'onLastPageClick',
+	        value: function onLastPageClick() {
+	            var totalPages = this.props.totalPages;
+	
+	            this.updateCurrentPage(totalPages);
+	        }
+	    }, {
+	        key: 'handleCurrentPageOnEnter',
+	        value: function handleCurrentPageOnEnter(event) {
+	            if (event.key === 'Enter') {
+	                this.handleOnPageChange();
+	            }
+	        }
+	    }, {
+	        key: 'handleCurrentPageOnChange',
+	        value: function handleCurrentPageOnChange(event) {
+	            var page = event.target.value;
+	            this.updateCurrentPage(page, false);
+	        }
+	    }, {
+	        key: 'renderFirstPageButton',
 	        value: function renderFirstPageButton() {
 	            if (this.isFirstPage()) {
 	                return _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
+	                    'div',
+	                    { className: 'pager-item' },
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "pager-btn pager-btn-disabled" },
-	                        _react2.default.createElement("i", { className: "fa fa-angle-double-left", "aria-hidden": "true" })
+	                        'a',
+	                        { className: 'pager-btn pager-btn-disabled' },
+	                        _react2.default.createElement('i', { className: 'fa fa-angle-double-left', 'aria-hidden': 'true' })
 	                    )
 	                );
 	            }
 	            var onFirstPage = this.props.onFirstPage;
 	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
+	                'div',
+	                { className: 'pager-item' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { className: "pager-btn", onClick: onFirstPage },
-	                    _react2.default.createElement("i", { className: "fa fa-angle-double-left", "aria-hidden": "true" })
+	                    'a',
+	                    { className: 'pager-btn', onClick: this.onFirstPageClick.bind(this) },
+	                    _react2.default.createElement('i', { className: 'fa fa-angle-double-left', 'aria-hidden': 'true' })
 	                )
 	            );
 	        }
 	    }, {
-	        key: "renderPreviousPageButton",
+	        key: 'renderPreviousPageButton',
 	        value: function renderPreviousPageButton() {
 	            if (this.isFirstPage()) {
 	                return _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
+	                    'div',
+	                    { className: 'pager-item' },
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "pager-btn pager-btn-disabled" },
-	                        _react2.default.createElement("i", { className: "fa fa-angle-left", "aria-hidden": "true" })
+	                        'a',
+	                        { className: 'pager-btn pager-btn-disabled' },
+	                        _react2.default.createElement('i', { className: 'fa fa-angle-left', 'aria-hidden': 'true' })
 	                    )
 	                );
 	            }
 	            var onPreviousPage = this.props.onPreviousPage;
 	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
+	                'div',
+	                { className: 'pager-item' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { className: "pager-btn", onClick: onPreviousPage },
-	                    _react2.default.createElement("i", { className: "fa fa-angle-left", "aria-hidden": "true" })
+	                    'a',
+	                    { className: 'pager-btn', onClick: this.onPreviousPageClick.bind(this) },
+	                    _react2.default.createElement('i', { className: 'fa fa-angle-left', 'aria-hidden': 'true' })
 	                )
 	            );
 	        }
 	    }, {
-	        key: "renderNextPageButton",
+	        key: 'renderNextPageButton',
 	        value: function renderNextPageButton() {
 	            if (this.isLastPage()) {
 	                return _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
+	                    'div',
+	                    { className: 'pager-item' },
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "pager-btn pager-btn-disabled" },
-	                        _react2.default.createElement("i", { className: "fa fa-angle-right", "aria-hidden": "true" })
+	                        'a',
+	                        { className: 'pager-btn pager-btn-disabled' },
+	                        _react2.default.createElement('i', { className: 'fa fa-angle-right', 'aria-hidden': 'true' })
 	                    )
 	                );
 	            }
 	            var onNextPage = this.props.onNextPage;
 	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
+	                'div',
+	                { className: 'pager-item' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { className: "pager-btn", onClick: onNextPage },
-	                    _react2.default.createElement("i", { className: "fa fa-angle-right", "aria-hidden": "true" })
+	                    'a',
+	                    { className: 'pager-btn', onClick: this.onNextPageClick.bind(this) },
+	                    _react2.default.createElement('i', { className: 'fa fa-angle-right', 'aria-hidden': 'true' })
 	                )
 	            );
 	        }
 	    }, {
-	        key: "renderLastPageButton",
+	        key: 'renderLastPageButton',
 	        value: function renderLastPageButton() {
 	            if (this.isLastPage()) {
 	                return _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
+	                    'div',
+	                    { className: 'pager-item' },
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "pager-btn pager-btn-disabled" },
-	                        _react2.default.createElement("i", { className: "fa fa-angle-double-right", "aria-hidden": "true" })
+	                        'a',
+	                        { className: 'pager-btn pager-btn-disabled' },
+	                        _react2.default.createElement('i', { className: 'fa fa-angle-double-right', 'aria-hidden': 'true' })
 	                    )
 	                );
 	            }
-	            var onLastPage = this.props.onLastPage;
-	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
+	                'div',
+	                { className: 'pager-item' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { className: "pager-btn", onClick: onLastPage },
-	                    _react2.default.createElement("i", { className: "fa fa-angle-double-right", "aria-hidden": "true" })
+	                    'a',
+	                    { className: 'pager-btn', onClick: this.onLastPageClick.bind(this) },
+	                    _react2.default.createElement('i', { className: 'fa fa-angle-double-right', 'aria-hidden': 'true' })
 	                )
 	            );
 	        }
 	    }, {
-	        key: "renderDisplayLabel",
+	        key: 'renderDisplayLabel',
 	        value: function renderDisplayLabel() {
 	            var displayLabel = this.props.displayLabel;
 	
 	            if (displayLabel) {
 	                return _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item pager-item-right" },
+	                    'div',
+	                    { className: 'pager-item pager-item-right' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "pager-text-item" },
+	                        'div',
+	                        { className: 'pager-text-item' },
 	                        displayLabel
 	                    )
 	                );
 	            }
 	        }
 	    }, {
-	        key: "renderTotalPages",
+	        key: 'renderTotalPages',
 	        value: function renderTotalPages() {
 	            var totalPages = this.props.totalPages;
 	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
+	                'div',
+	                { className: 'pager-item' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-text-item" },
-	                    "of ",
+	                    'div',
+	                    { className: 'pager-text-item' },
+	                    'of ',
 	                    totalPages
 	                )
 	            );
 	        }
 	    }, {
-	        key: "handleCurrentPageNumberChange",
-	        value: function handleCurrentPageNumberChange(value) {
-	            if (/^\d+$/.test(value)) {
-	                var _props2 = this.props;
-	                var currentPage = _props2.currentPage;
-	                var totalPages = _props2.totalPages;
-	
-	                if (parseInt(value) >= 1 & parseInt(value) <= totalPages) {
-	                    this.props.onPageNumberEnter(value);
-	                    return;
-	                }
-	            }
-	            this.refs.currentPage.value = this.props.currentPage;
-	        }
-	    }, {
-	        key: "handleCurrentPageOnEnter",
-	        value: function handleCurrentPageOnEnter(event) {
-	            if (event.key === 'Enter') {
-	                var page = event.target.value;
-	                this.handleCurrentPageNumberChange(page);
-	            }
-	        }
-	    }, {
-	        key: "handleCurrentPageOnBlur",
-	        value: function handleCurrentPageOnBlur(event) {
-	            var page = this.refs.currentPage.value;
-	            this.handleCurrentPageNumberChange(page);
-	        }
-	    }, {
-	        key: "handleCurrentPageChange",
-	        value: function handleCurrentPageChange(event) {
-	            var page = event.target.value;
-	            this.handleCurrentPageNumberChange(page);
-	        }
-	    }, {
-	        key: "componentDidUpdate",
-	        value: function componentDidUpdate(prevProps, prevState) {
-	            if (this.props.currentPage != prevProps.currentPage) {
-	                this.refs.currentPage.value = this.props.currentPage;
-	            }
-	        }
-	    }, {
-	        key: "renderCurrentPage",
+	        key: 'renderCurrentPage',
 	        value: function renderCurrentPage() {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager-item" },
-	                _react2.default.createElement("input", { className: "pager-text-box", ref: "currentPage", type: "text", onBlur: this.handleCurrentPageOnBlur.bind(this), defaultValue: this.props.currentPage, onKeyPress: this.handleCurrentPageOnEnter.bind(this) })
+	                'div',
+	                { className: 'pager-item' },
+	                _react2.default.createElement('input', { className: 'pager-text-box',
+	                    ref: 'currentPage',
+	                    type: 'text',
+	                    onChange: this.handleCurrentPageOnChange.bind(this),
+	                    onBlur: this.handleCurrentPageOnBlur.bind(this),
+	                    value: this.state.currentPage,
+	                    onKeyPress: this.handleCurrentPageOnEnter.bind(this) })
 	            );
 	        }
 	    }, {
-	        key: "renderRefresh",
+	        key: 'renderRefresh',
 	        value: function renderRefresh() {
 	            var onRefresh = this.props.onRefresh;
 	
 	            if (onRefresh) {
 	                return _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "pager-item" },
-	                        _react2.default.createElement("div", { className: "pager-separator" })
+	                        'div',
+	                        { className: 'pager-item' },
+	                        _react2.default.createElement('div', { className: 'pager-separator' })
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "pager-item" },
+	                        'div',
+	                        { className: 'pager-item' },
 	                        _react2.default.createElement(
-	                            "a",
-	                            { className: "pager-btn", onClick: onRefresh },
-	                            "Refresh"
+	                            'a',
+	                            { className: 'pager-btn', onClick: onRefresh },
+	                            'Refresh'
 	                        )
 	                    )
 	                );
 	            }
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "pager" },
+	                'div',
+	                { className: 'pager' },
 	                this.renderFirstPageButton(),
 	                this.renderPreviousPageButton(),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
-	                    _react2.default.createElement("div", { className: "pager-separator" })
+	                    'div',
+	                    { className: 'pager-item' },
+	                    _react2.default.createElement('div', { className: 'pager-separator' })
 	                ),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
+	                    'div',
+	                    { className: 'pager-item' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "pager-text-item" },
-	                        "Page"
+	                        'div',
+	                        { className: 'pager-text-item' },
+	                        'Page'
 	                    )
 	                ),
 	                this.renderCurrentPage(),
 	                this.renderTotalPages(),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "pager-item" },
-	                    _react2.default.createElement("div", { className: "pager-separator" })
+	                    'div',
+	                    { className: 'pager-item' },
+	                    _react2.default.createElement('div', { className: 'pager-separator' })
 	                ),
 	                this.renderNextPageButton(),
 	                this.renderLastPageButton(),
@@ -365,17 +406,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    currentPage: _react.PropTypes.number.isRequired,
 	    totalPages: _react.PropTypes.number.isRequired,
 	    onRefresh: _react.PropTypes.func,
-	    onFirstPage: _react.PropTypes.func.isRequired,
-	    onPreviousPage: _react.PropTypes.func.isRequired,
-	    onNextPage: _react.PropTypes.func.isRequired,
-	    onLastPage: _react.PropTypes.func.isRequired,
-	    onPageNumberEnter: _react.PropTypes.func,
+	    onPageChange: _react.PropTypes.func.isRequired,
 	    displayLabel: _react.PropTypes.string
-	};
-	Reaginate.defaultProps = {
-	    onPageNumberEnter: function onPageNumberEnter(number) {
-	        return null;
-	    }
 	};
 	exports.default = Reaginate;
 

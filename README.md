@@ -1,34 +1,39 @@
 # React Pager
 
-A nice pager component for React
+A ReactJS component to render a pagination.
 
-
-Installation:
+## Installation
 
     npm install reaginate --save
 
-Screenshot:
+## Screenshot
 
 ![Image of reaginate component](https://raw.githubusercontent.com/jamhall/reaginate/master/screenshot.png)
 
-API:
+## Props
 
-```
+| Name | Type | Description |
+| --- | --- | --- | --- |
+| `currentPage` | `Number` | **Required.** The current page to display. |
+| `totalPages` | `Number` | **Required.** The total number of pages. |
+| `onPageChange` | `Number` | **Required.** A callback with the page number as an argument for when the page changes. |
+| `onRefresh` | `Function` | A function when the refresh button is clicked. If omitted, the button is not displayed. |
+| `displayLabel` | `String` | A label to display feedback for the user. i.e. Displaying 1 to 50 of 200 messages |
+
+## API:
+
+```javascript
 <Reaginate
     currentPage={ pager.currentPage }
     totalPages={ pager.totalPages }
-    onPageNumberEnter={ this.onNumberEnter }
+    onPageChange={ this.onPageChange }
     onRefresh={ this.onRefresh }
-    displayLabel={ `Displaying events 101 - 150 of 7765` }
-    onFirstPage={ this.onFirstPage }
-    onPreviousPage={ this.onPreviousPage }
-    onNextPage={ this.onNextPage}
-    onLastPage={ this.onLastPage }/>
+    displayLabel={ `Displaying events 101 - 150 of 7765` }/>
 ```
 
-Example usage:
+## Example usage:
 
-```
+```javascript
 import React, {Component} from 'react';
 
 import 'reaginate/src/reaginate.scss'
@@ -47,50 +52,16 @@ class MessageInbox extends Component {
         };
     }
 
-    updatePager(currentPage, totalPages) {
+    onPageChange(page) {
+        const {totalPages} = this.state.pager;
         this.setState({
             pager: {
-                currentPage: currentPage,
+                currentPage: page,
                 totalPages: totalPages
             }
         });
     }
 
-    onNextPage() {
-        const {currentPage, totalPages} = this.state.pager;
-        const newCurrentPage = currentPage + 1;
-        // Fetch data, then update...
-        this.updatePager(newCurrentPage, totalPages);
-    }
-
-    onPreviousPage() {
-        const {currentPage, totalPages} = this.state.pager;
-        const newCurrentPage = currentPage - 1
-        // Fetch data, then update...
-        this.updatePager(newCurrentPage, totalPages);
-    }
-
-    onFirstPage() {
-        const {totalPages} = this.state.pager;
-        // Fetch data, then update...
-        this.updatePager(1, totalPages);
-    }
-
-    onLastPage() {
-        const {totalPages} = this.state.pager;
-        // Fetch data, then update...
-        this.updatePager(totalPages, totalPages);
-    }
-
-    onNumberEnter(page) {
-        // User has entered a number in to the current page box....do something...
-        // Fetch data, then update...
-    }
-
-    onRefresh() {
-        // User has clicked on the fresh button
-        // Fetch data...
-    }
 
     render() {
         const {pager} = this.state;
@@ -98,15 +69,10 @@ class MessageInbox extends Component {
           <div>
               <Grid />
               <Reaginate
-                  currentPage={pager.currentPage}
-                  totalPages={pager.totalPages}
-                  onPageNumberEnter={:: this.onNumberEnter}
-                  onRefresh={:: this.onRefresh}
-                  displayLabel={`Displaying events 101 - 150 of 7765`}
-                  onFirstPage={:: this.onFirstPage}
-                  onPreviousPage={:: this.onPreviousPage}
-                  onNextPage={:: this.onNextPage}
-                  onLastPage={:: this.onLastPage}/>
+                  currentPage={ pager.currentPage }
+                  totalPages={ pager.totalPages }
+                  onPageChange={ this.onPageChange }
+                  displayLabel={ `Displaying events 101 - 150 of 7765` }/>
           </div>
         );
     }

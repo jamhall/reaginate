@@ -6,16 +6,8 @@ export default class Reaginate extends Component {
         currentPage: PropTypes.number.isRequired,
         totalPages: PropTypes.number.isRequired,
         onRefresh: PropTypes.func,
-        onFirstPage: PropTypes.func.isRequired,
-        onPreviousPage: PropTypes.func.isRequired,
-        onNextPage: PropTypes.func.isRequired,
-        onLastPage: PropTypes.func.isRequired,
-        onPageNumberEnter: PropTypes.func,
+        onPageChange: PropTypes.func.isRequired,
         displayLabel: PropTypes.string
-    }
-
-    static defaultProps = {
-        onPageNumberEnter: (number) => null
     }
 
     constructor(props) {
@@ -26,13 +18,77 @@ export default class Reaginate extends Component {
     }
 
     isFirstPage() {
-        const {currentPage} = this.props;
+        const {currentPage} = this.state;
         return currentPage === 1;
     }
 
     isLastPage() {
-        const {currentPage, totalPages} = this.props;
+        const {currentPage} = this.state;
+        const {totalPages} = this.props;
         return currentPage === totalPages;
+    }
+
+    handleOnPageChange() {
+        const page = this.state.currentPage;
+        if (/^\d+$/.test(page)) {
+            const {currentPage, totalPages} = this.props;
+            const convertedPage = parseInt(page);
+            if (convertedPage >= 1 & convertedPage <= totalPages) {
+                this.setState({
+                    currentPage: convertedPage
+                });
+                this.props.onPageChange(convertedPage);
+                return;
+            }
+        }
+        this.updateCurrentPage(this.props.currentPage, false);
+    }
+
+    handleCurrentPageOnBlur() {
+        const {currentPage} = this.props;
+        this.updateCurrentPage(currentPage, false);
+    }
+
+    updateCurrentPage(page, notify=true) {
+        this.setState({
+            currentPage: page
+        });
+        if(notify) {
+            this.props.onPageChange(page);
+        }
+    }
+
+    onNextPageClick() {
+        const {currentPage} =  this.state;
+        const newCurrentPage = currentPage + 1;
+        this.updateCurrentPage(newCurrentPage);
+    }
+
+    onPreviousPageClick() {
+        const {currentPage} =  this.state;
+        const newCurrentPage = currentPage - 1;
+        this.updateCurrentPage(newCurrentPage);
+    }
+
+    onFirstPageClick() {
+        this.updateCurrentPage(1);
+    }
+
+    onLastPageClick() {
+        const {totalPages} = this.props;
+        this.updateCurrentPage(totalPages);
+    }
+
+    handleCurrentPageOnEnter(event) {
+        if (event.key === 'Enter') {
+            this.handleOnPageChange();
+        }
+    }
+
+
+    handleCurrentPageOnChange(event) {
+        const page = event.target.value;
+        this.updateCurrentPage(page, false);
     }
 
     renderFirstPageButton() {
@@ -48,7 +104,7 @@ export default class Reaginate extends Component {
         const {onFirstPage} = this.props;
         return (
             <div className="pager-item">
-                <a className="pager-btn" onClick={onFirstPage}>
+                <a className="pager-btn" onClick={ ::this.onFirstPageClick }>
                     <i className="fa fa-angle-double-left" aria-hidden="true"/>
                 </a>
             </div>
@@ -68,7 +124,7 @@ export default class Reaginate extends Component {
         const {onPreviousPage} = this.props;
         return (
             <div className="pager-item">
-                <a className="pager-btn" onClick={onPreviousPage}>
+                <a className="pager-btn" onClick={ ::this.onPreviousPageClick }>
                     <i className="fa fa-angle-left" aria-hidden="true"/>
                 </a>
             </div>
@@ -88,7 +144,7 @@ export default class Reaginate extends Component {
         const {onNextPage} = this.props;
         return (
             <div className="pager-item">
-                <a className="pager-btn" onClick={onNextPage}>
+                <a className="pager-btn" onClick={ ::this.onNextPageClick }>
                     <i className="fa fa-angle-right" aria-hidden="true"/>
                 </a>
             </div>
@@ -105,10 +161,9 @@ export default class Reaginate extends Component {
                 </div>
             );
         }
-        const {onLastPage} = this.props;
         return (
             <div className="pager-item">
-                <a className="pager-btn" onClick={onLastPage}>
+                <a className="pager-btn" onClick={ ::this.onLastPageClick }>
                     <i className="fa fa-angle-double-right" aria-hidden="true"/>
                 </a>
             </div>
@@ -137,43 +192,16 @@ export default class Reaginate extends Component {
         );
     }
 
-    handleCurrentPageNumberChange(value) {
-        if (/^\d+$/.test(value)) {
-            const {currentPage, totalPages} = this.props;
-            if (parseInt(value) >= 1 & parseInt(value) <= totalPages) {
-                this.props.onPageNumberEnter(value);
-                return;
-            }
-        }
-        this.refs.currentPage.value = this.props.currentPage;
-    }
-
-    handleCurrentPageOnEnter(event) {
-        if (event.key === 'Enter') {
-            const page = event.target.value;
-            this.handleCurrentPageNumberChange(page);
-        }
-    }
-
-    handleCurrentPageOnBlur(event) {
-        const page = this.refs.currentPage.value;
-        this.handleCurrentPageNumberChange(page);
-    }
-
-    handleCurrentPageChange(event) {
-        const page = event.target.value;
-        this.handleCurrentPageNumberChange(page);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.currentPage != prevProps.currentPage) {
-            this.refs.currentPage.value = this.props.currentPage;
-        }
-    }
     renderCurrentPage() {
         return (
             <div className="pager-item">
-                <input className="pager-text-box" ref="currentPage" type="text" onBlur={:: this.handleCurrentPageOnBlur} defaultValue={this.props.currentPage} onKeyPress={:: this.handleCurrentPageOnEnter}/>
+                <input className="pager-text-box"
+                    ref="currentPage"
+                    type="text"
+                    onChange = { ::this.handleCurrentPageOnChange }
+                    onBlur={:: this.handleCurrentPageOnBlur}
+                    value={this.state.currentPage}
+                    onKeyPress={:: this.handleCurrentPageOnEnter}/>
             </div>
         );
     }
