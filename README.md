@@ -1,2 +1,3 @@
-# react-pager
+# React Pager
+
 A nice pager component for React

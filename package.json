@@ -1,0 +1,51 @@
+{
+    "name": "reaginate",
+    "version": "0.0.0",
+    "description": "A nice pager component for React",
+    "main": "dist/reaginate.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jamhall/reaginate.git"
+    },
+    "keywords": [
+        "pager",
+        "paginate",
+        "page",
+        "react"
+    ],
+    "author": "Jamie Hall <hello@jamiehall.eu> (https://github.com/jamhall)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/jamhall/reaginate/issues"
+    },
+    "homepage": "https://github.com/jamhall/reaginate",
+    "devDependencies": {
+        "babel-cli": "6.8.0",
+        "babel-core": "^6.5.1",
+        "babel-eslint": "^6.0.4",
+        "babel-loader": "^6.2.3",
+        "babel-plugin-react-transform": "^2.0.0",
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "babel-plugin-transform-react-inline-elements": "^6.6.5",
+        "babel-plugin-typecheck": "^3.9.0",
+        "babel-polyfill": "^6.5.0",
+        "babel-preset-es2015": "^6.5.0",
+        "babel-preset-es2015-rollup": "^1.1.1",
+        "babel-preset-react": "^6.5.0",
+        "babel-preset-stage-0": "^6.5.0",
+        "css-loader": "^0.23.1",
+        "esnext-loader": "^1.1.0",
+        "file-loader": "~0.8.5",
+        "imports-loader": "^0.6.5",
+        "node-sass": "^3.4.2",
+        "sass-loader": "^3.2.0",
+        "source-map": "^0.5.3",
+        "style-loader": "~0.13.0",
+        "webpack": "^1.12.14",
+        "react": "^0.14.0 || ^15.0.0",
+        "react-dom": "^0.14.0 || ^15.0.0"
+    }
+}
