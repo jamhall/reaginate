@@ -1,4 +1,4 @@
-# React Pager
+# Reaginate
 
 A ReactJS component to render a pagination.
 
