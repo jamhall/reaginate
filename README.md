@@ -20,7 +20,7 @@ A ReactJS component to render a pagination.
 | `onRefresh` | `Function` | A function when the refresh button is clicked. If omitted, the button is not displayed. |
 | `displayLabel` | `String` | A label to display feedback for the user. i.e. Displaying 1 to 50 of 200 messages |
 
-## API:
+## API
 
 ```javascript
 <Reaginate
@@ -31,7 +31,7 @@ A ReactJS component to render a pagination.
     displayLabel={ `Displaying events 101 - 150 of 7765` }/>
 ```
 
-## Example usage:
+## Example usage
 
 ```javascript
 import React, {Component} from 'react';
