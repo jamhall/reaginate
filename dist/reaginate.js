@@ -274,14 +274,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.handleCurrentPageNumberChange(page);
 	        }
 	    }, {
+	        key: "handleCurrentPageChange",
+	        value: function handleCurrentPageChange(event) {
+	            var page = event.target.value;
+	            this.handleCurrentPageNumberChange(page);
+	        }
+	    }, {
+	        key: "componentDidUpdate",
+	        value: function componentDidUpdate(prevProps, prevState) {
+	            if (this.props.currentPage != prevProps.currentPage) {
+	                this.refs.currentPage.value = this.props.currentPage;
+	            }
+	        }
+	    }, {
 	        key: "renderCurrentPage",
 	        value: function renderCurrentPage() {
-	            var currentPage = this.props.currentPage;
-	
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "pager-item" },
-	                _react2.default.createElement("input", { className: "pager-text-box", ref: "currentPage", type: "text", onBlur: this.handleCurrentPageOnBlur.bind(this), onKeyPress: this.handleCurrentPageOnEnter.bind(this), defaultValue: currentPage })
+	                _react2.default.createElement("input", { className: "pager-text-box", ref: "currentPage", type: "text", onBlur: this.handleCurrentPageOnBlur.bind(this), defaultValue: this.props.currentPage, onKeyPress: this.handleCurrentPageOnEnter.bind(this) })
 	            );
 	        }
 	    }, {

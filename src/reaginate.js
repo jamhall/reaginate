@@ -160,11 +160,20 @@ export default class Reaginate extends Component {
         this.handleCurrentPageNumberChange(page);
     }
 
+    handleCurrentPageChange(event) {
+        const page = event.target.value;
+        this.handleCurrentPageNumberChange(page);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.currentPage != prevProps.currentPage) {
+            this.refs.currentPage.value = this.props.currentPage;
+        }
+    }
     renderCurrentPage() {
-        const {currentPage} = this.props;
         return (
             <div className="pager-item">
-                <input className="pager-text-box" ref="currentPage" type="text" onBlur={:: this.handleCurrentPageOnBlur} onKeyPress={:: this.handleCurrentPageOnEnter} defaultValue={currentPage}/>
+                <input className="pager-text-box" ref="currentPage" type="text" onBlur={:: this.handleCurrentPageOnBlur} defaultValue={this.props.currentPage} onKeyPress={:: this.handleCurrentPageOnEnter}/>
             </div>
         );
     }

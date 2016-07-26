@@ -6,7 +6,8 @@ var options = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         library: 'Reaginate',
-        filename: 'reaginate.js'
+        filename: 'reaginate.js',
+        libraryTarget: 'umd'
     },
     module: {
         loaders: [{
