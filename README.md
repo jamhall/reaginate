@@ -16,7 +16,7 @@ A ReactJS component to render a pagination.
 | --- | --- | --- | --- |
 | `currentPage` | `Number` | **Required.** The current page to display. |
 | `totalPages` | `Number` | **Required.** The total number of pages. |
-| `onPageChange` | `Number` | **Required.** A callback with the page number as an argument for when the page changes. |
+| `onPageChange` | `Function` | **Required.** A callback with the page number as an argument for when the page changes. |
 | `onRefresh` | `Function` | A function when the refresh button is clicked. If omitted, the button is not displayed. |
 | `displayLabel` | `String` | A label to display feedback for the user. i.e. Displaying 1 to 50 of 200 messages |
 
@@ -53,7 +53,7 @@ class MessageInbox extends Component {
     }
 
     onPageChange(page) {
-        const {totalPages} = this.state.pager;
+        const {totalPages} = this.state;
         this.setState({
             pager: {
                 currentPage: page,
@@ -71,7 +71,7 @@ class MessageInbox extends Component {
               <Reaginate
                   currentPage={ pager.currentPage }
                   totalPages={ pager.totalPages }
-                  onPageChange={ this.onPageChange }
+                  onPageChange={ ::this.onPageChange }
                   displayLabel={ `Displaying events 101 - 150 of 7765` }/>
           </div>
         );
